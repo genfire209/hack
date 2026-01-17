@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GestureFlow - Control Your PC with Hand Gestures</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #0f0f23;
+        }
+
+        .hero {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 80px 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="2" fill="rgba(255,255,255,0.1)"/></svg>');
+            opacity: 0.5;
+        }
+
+        .hero-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            font-weight: 700;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 40px;
+            opacity: 0.95;
+        }
+
+        .download-btn {
+            display: inline-block;
+            padding: 18px 45px;
+            background: white;
+            color: #667eea;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .download-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+        }
+
+        .features {
+            max-width: 1200px;
+            margin: 80px auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 40px;
+        }
+
+        .feature-card {
+            background: #1a1a2e;
+            padding: 40px 30px;
+            border-radius: 15px;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(102, 126, 234, 0.3);
+            border-color: #667eea;
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+
+        .feature-card h3 {
+            color: #fff;
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+        }
+
+        .feature-card p {
+            color: #aaa;
+            line-height: 1.8;
+        }
+
+        .gesture-list {
+            max-width: 900px;
+            margin: 80px auto;
+            padding: 0 20px;
+            background: #1a1a2e;
+            border-radius: 20px;
+            padding: 50px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .gesture-list h2 {
+            color: #fff;
+            text-align: center;
+            margin-bottom: 40px;
+            font-size: 2.5rem;
+        }
+
+        .gesture-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: rgba(102, 126, 234, 0.1);
+            border-radius: 10px;
+            border-left: 4px solid #667eea;
+        }
+
+        .gesture-emoji {
+            font-size: 2.5rem;
+            margin-right: 25px;
+            min-width: 60px;
+        }
+
+        .gesture-text {
+            color: #fff;
+        }
+
+        .gesture-text strong {
+            color: #667eea;
+            display: block;
+            margin-bottom: 5px;
+            font-size: 1.1rem;
+        }
+
+        .gesture-text span {
+            color: #aaa;
+        }
+
+        .requirements {
+            max-width: 900px;
+            margin: 80px auto;
+            padding: 0 20px;
+        }
+
+        .requirements h2 {
+            color: #fff;
+            text-align: center;
+            margin-bottom: 40px;
+            font-size: 2.5rem;
+        }
+
+        .req-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .req-item {
+            background: #1a1a2e;
+            padding: 25px;
+            border-radius: 10px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .req-item h4 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        .req-item ul {
+            list-style: none;
+            color: #aaa;
+        }
+
+        .req-item ul li {
+            padding: 5px 0;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .req-item ul li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: #667eea;
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            background: #0a0a14;
+            color: #666;
+            margin-top: 80px;
+        }
+
+        .version-badge {
+            display: inline-block;
+            background: rgba(255,255,255,0.2);
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .gesture-list {
+                padding: 30px 20px;
+            }
+            
+            .gesture-item {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .gesture-emoji {
+                margin-right: 0;
+                margin-bottom: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="hero">
+        <div class="hero-content">
+            <div class="version-badge">v1.0 • Windows</div>
+            <h1>🖐️ GestureFlow</h1>
+            <p>Control your computer with simple hand gestures. No touch required.</p>
+            <a href="#" class="download-btn" onclick="alert('Replace this with your actual .exe download link!'); return false;">
+                ⬇️ Download for Windows
+            </a>
+        </div>
+    </div>
+
+    <div class="features">
+        <div class="feature-card">
+            <div class="feature-icon">🎚️</div>
+            <h3>Volume Control</h3>
+            <p>Adjust system volume with your right hand using thumb and index finger pinch gestures.</p>
+        </div>
+
+        <div class="feature-card">
+            <div class="feature-icon">💡</div>
+            <h3>Brightness Control</h3>
+            <p>Control screen brightness effortlessly with your left hand pinch gesture.</p>
+        </div>
+
+        <div class="feature-card">
+            <div class="feature-icon">🖱️</div>
+            <h3>Cursor Control</h3>
+            <p>Move your cursor and click using peace sign gesture with your right hand.</p>
+        </div>
+
+        <div class="feature-card">
+            <div class="feature-icon">📜</div>
+            <h3>Smart Scrolling</h3>
+            <p>Scroll through pages with a simple fist gesture using your left hand.</p>
+        </div>
+
+        <div class="feature-card">
+            <div class="feature-icon">⚡</div>
+            <h3>Real-time Detection</h3>
+            <p>Powered by MediaPipe for accurate and responsive hand tracking.</p>
+        </div>
+
+        <div class="feature-card">
+            <div class="feature-icon">🎯</div>
+            <h3>Easy to Use</h3>
+            <p>Intuitive gestures that anyone can learn in minutes. No complex setup required.</p>
+        </div>
+    </div>
+
+    <div class="gesture-list">
+        <h2>Gesture Controls</h2>
+        
+        <div class="gesture-item">
+            <div class="gesture-emoji">👌</div>
+            <div class="gesture-text">
+                <strong>Right Hand - Pinch</strong>
+                <span>Control system volume by pinching thumb and index finger together</span>
+            </div>
+        </div>
+
+        <div class="gesture-item">
+            <div class="gesture-emoji">👌</div>
+            <div class="gesture-text">
+                <strong>Left Hand - Pinch</strong>
+                <span>Adjust screen brightness with thumb and index finger pinch</span>
+            </div>
+        </div>
+
+        <div class="gesture-item">
+            <div class="gesture-emoji">✌️</div>
+            <div class="gesture-text">
+                <strong>Right Hand - Peace Sign</strong>
+                <span>Move cursor with index finger, pinch to click</span>
+            </div>
+        </div>
+
+        <div class="gesture-item">
+            <div class="gesture-emoji">✊</div>
+            <div class="gesture-text">
+                <strong>Left Hand - Fist</strong>
+                <span>Scroll up (fist high) or scroll down (fist low)</span>
+            </div>
+        </div>
+
+        <div class="gesture-item">
+            <div class="gesture-emoji">⌨️</div>
+            <div class="gesture-text">
+                <strong>Press 'Q' Key</strong>
+                <span>Exit the application</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="requirements">
+        <h2>System Requirements</h2>
+        <div class="req-grid">
+            <div class="req-item">
+                <h4>Operating System</h4>
+                <ul>
+                    <li>Windows 10/11</li>
+                    <li>64-bit processor</li>
+                </ul>
+            </div>
+
+            <div class="req-item">
+                <h4>Hardware</h4>
+                <ul>
+                    <li>Webcam (built-in or USB)</li>
+                    <li>4GB RAM minimum</li>
+                    <li>Good lighting recommended</li>
+                </ul>
+            </div>
+
+            <div class="req-item">
+                <h4>Dependencies</h4>
+                <ul>
+                    <li>Python 3.8+</li>
+                    <li>OpenCV</li>
+                    <li>MediaPipe</li>
+                    <li>PyAutoGUI</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 GestureFlow. Built with MediaPipe & OpenCV.</p>
+        <p style="margin-top: 10px; font-size: 0.9rem;">Gesture recognition powered by AI</p>
+    </footer>
+</body>
+</html>
