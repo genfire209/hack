@@ -254,12 +254,17 @@
 <body>
     <div class="hero">
         <div class="hero-content">
-            <div class="version-badge">v1.0 • Windows</div>
+            <div class="version-badge">v1.0 • Windows & Linux</div>
             <h1>🖐️ GestureFlow</h1>
             <p>Control your computer with simple hand gestures. No touch required.</p>
-            <a href="https://github.com/genfire209/hack/releases/download/v1.0/gesture_control.exe" class="download-btn" download>
-                ⬇️ Download for Windows
-            </a>
+            <div style="display: flex; gap: 20px; justify-content: center; flex-wrap: wrap;">
+                <a href="https://github.com/genfire209/hack/releases/download/v1.0/gesture_control.exe" class="download-btn" download>
+                    ⬇️ Download for Windows
+                </a>
+                <a href="https://github.com/genfire209/hack.git" class="download-btn" target="_blank">
+                    ⬇️ Download for Linux
+                </a>
+            </div>
         </div>
     </div>
 
@@ -278,13 +283,13 @@
 
         <div class="feature-card">
             <div class="feature-icon">🖱️</div>
-            <h3>Cursor Control</h3>
+            <h3>Cursor Control*</h3>
             <p>Move your cursor and click using peace sign gesture with your right hand.</p>
         </div>
 
         <div class="feature-card">
             <div class="feature-icon">📜</div>
-            <h3>Smart Scrolling</h3>
+            <h3>Smart Scrolling*</h3>
             <p>Scroll through pages with a simple fist gesture using your left hand.</p>
         </div>
 
@@ -323,7 +328,7 @@
         <div class="gesture-item">
             <div class="gesture-emoji">✌️</div>
             <div class="gesture-text">
-                <strong>Right Hand - Peace Sign</strong>
+                <strong>Right Hand - Peace Sign*</strong>
                 <span>Move cursor with index finger, pinch to click</span>
             </div>
         </div>
@@ -331,7 +336,7 @@
         <div class="gesture-item">
             <div class="gesture-emoji">✊</div>
             <div class="gesture-text">
-                <strong>Left Hand - Fist</strong>
+                <strong>Left Hand - Fist*</strong>
                 <span>Scroll up (fist high) or scroll down (fist low)</span>
             </div>
         </div>
@@ -380,6 +385,7 @@
     <footer>
         <p>&copy; 2026 GestureFlow. Built with MediaPipe & OpenCV.</p>
         <p style="margin-top: 10px; font-size: 0.9rem;">Gesture recognition powered by AI</p>
+        <p style="margin-top: 15px; font-size: 0.85rem; color: #888;">* Feature not supported on Linux</p>
     </footer>
 </body>
 </html>
