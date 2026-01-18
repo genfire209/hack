@@ -19,6 +19,7 @@ if [ "$distro" = "arch" ]; then
     makepkg -si --noconfirm
   fi
   yay -S --needed python311 --noconfirm
+
 elif [ "$distro" = "debian" ]; then
   sudo apt install -y git build-essential curl libssl-dev
   curl https://pyenv.run | $SHELL
@@ -29,23 +30,22 @@ elif [ "$distro" = "debian" ]; then
       echo 'export PYENV_ROOT="$HOME/.pyenv"' >>"$config_file"
       echo 'export PATH="$PYENV_ROOT/bin:$PATH"' >>"$config_file"
       echo 'eval "$(pyenv init -)"' >>"$config_file"
-      echo 'eval "$(pyenv virtualenv-init -)"'
+      echo 'eval "$(pyenv virtualenv-init -)"' >>"$config_file"
       source "$config_file"
     fi
     ;;
   zsh)
-    config_file = "$HOME/.zshrc"
+    config_file="$HOME/.zshrc"
     if ! grep -q "PYENV_ROOT" "$config_file" 2>/dev/null; then
       echo 'export PYENV_ROOT="$HOME/.pyenv"' >>"$config_file"
       echo 'export PATH="$PYENV_ROOT/bin:$PATH"' >>"$config_file"
       echo 'eval "$(pyenv init -)"' >>"$config_file"
-      echo 'eval "$(pyenv virtualenv-init i-)"'
+      echo 'eval "$(pyenv virtualenv-init -)"' >>"$config_file"
       source "$config_file"
     fi
     ;;
   esac
   pyenv install 3.11.8
-
 elif [ "$distro" = "ubuntu" ]; then
   sudo add-apt-repository ppa:deadsnakes/ppa -y
   sudo apt install -y git build-essential python3.11 python3.11-venv python3-pip
