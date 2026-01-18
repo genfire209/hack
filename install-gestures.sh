@@ -29,6 +29,7 @@ elif [ "$distro" = "debian" ]; then
       echo 'export PYENV_ROOT="$HOME/.pyenv"' >>"$config_file"
       echo 'export PATH="$PYENV_ROOT/bin:$PATH"' >>"$config_file"
       echo 'eval "$(pyenv init -)"' >>"$config_file"
+      echo 'eval "$(pyenv virtualenv-init -)"'
       source "$config_file"
     fi
     ;;
@@ -38,6 +39,7 @@ elif [ "$distro" = "debian" ]; then
       echo 'export PYENV_ROOT="$HOME/.pyenv"' >>"$config_file"
       echo 'export PATH="$PYENV_ROOT/bin:$PATH"' >>"$config_file"
       echo 'eval "$(pyenv init -)"' >>"$config_file"
+      echo 'eval "$(pyenv virtualenv-init i-)"'
       source "$config_file"
     fi
     ;;
@@ -96,4 +98,3 @@ echo "To run the gesture control:"
 echo "  source ~/mediapipe-env/bin/activate"
 echo "  python gesture_control.py"
 echo "============================================"
-
