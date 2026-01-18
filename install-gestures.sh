@@ -20,8 +20,30 @@ if [ "$distro" = "arch" ]; then
   fi
   yay -S --needed python311 --noconfirm
 elif [ "$distro" = "debian" ]; then
-  sudo add-apt-repository ppa:deadsnakes/ppa -y
-  sudo apt install -y git build-essential python3.11 python3.11-venv python3-pip
+  sudo apt install -y git build-essential curl libssl-dev
+  curl https://pyenv.run | $SHELL
+  case $SHELL in
+  bash)
+    config_file="$HOME/.bashrc"
+    if ! grep -q "PYENV_ROOT" "$config_file" 2>/dev/null; then
+      echo 'export PYENV_ROOT="$HOME/.pyenv"' >>"$config_file"
+      echo 'export PATH="$PYENV_ROOT/bin:$PATH"' >>"$config_file"
+      echo 'eval "$(pyenv init -)"' >>"$config_file"
+      source "$config_file"
+    fi
+    ;;
+  zsh)
+    config_file = "$HOME/.zshrc"
+    if ! grep -q "PYENV_ROOT" "$config_file" 2>/dev/null; then
+      echo 'export PYENV_ROOT="$HOME/.pyenv"' >>"$config_file"
+      echo 'export PATH="$PYENV_ROOT/bin:$PATH"' >>"$config_file"
+      echo 'eval "$(pyenv init -)"' >>"$config_file"
+      source "$config_file"
+    fi
+    ;;
+  esac
+  pyenv install 3.11.8
+
 elif [ "$distro" = "ubuntu" ]; then
   sudo add-apt-repository ppa:deadsnakes/ppa -y
   sudo apt install -y git build-essential python3.11 python3.11-venv python3-pip
@@ -53,11 +75,11 @@ if [ -n "$backlight_device" ]; then
 ACTION=="add", SUBSYSTEM=="backlight", KERNEL=="$backlight_device", RUN+="/bin/chgrp video /sys/class/backlight/%k/brightness"
 ACTION=="add", SUBSYSTEM=="backlight", KERNEL=="$backlight_device", RUN+="/bin/chmod g+w /sys/class/backlight/%k/brightness"
 EOF
-  
+
   # Reload udev rules
   sudo udevadm control --reload-rules
   sudo udevadm trigger --subsystem-match=backlight
-  
+
   echo "✓ Brightness control configured for device: $backlight_device"
 else
   echo "⚠ No backlight device found, brightness control may not work"
@@ -74,3 +96,4 @@ echo "To run the gesture control:"
 echo "  source ~/mediapipe-env/bin/activate"
 echo "  python gesture_control.py"
 echo "============================================"
+
