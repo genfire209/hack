@@ -16,6 +16,7 @@ if [ "$distro" = "arch" ]; then
   fi
   yay -S --needed python311 --noconfirm
 elif [ "$distro" = "debian"]; then
+  sudo add-apt-repository ppa:deadsnakes/ppa -y
   sudo apt install -y git build-essential python3.11 python3.11-venv python3-pip
 elif [ "$distro" = "ubuntu"]; then
   sudo add-apt-repository ppa:deadsnakes/ppa -y
