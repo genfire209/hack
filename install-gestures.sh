@@ -26,7 +26,7 @@ elif [ "$distro" = "fedora"]; then
 else
   echo 'Unsupported'
 fi
-sudo usermod -a -G video audio $USER
+sudo usermod -aG video $USER
 python3.11 -m venv ~/mediapipe-env/
 source ~/mediapipe-env/bin/activate
 pip install mediapipe
